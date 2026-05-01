@@ -12,7 +12,7 @@ class Person {
 
     public:
     Person();
-    Person(int id , char *name , char* password){};
+    Person(int id , const char *name , const char* password){};
     virtual ~Person();
 
 

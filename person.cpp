@@ -25,7 +25,7 @@ Person::Person(){
     Password[1] = '\0';
 }
 
-Person::Person(int id , char* name , char* password){
+Person::Person(int id , const char* name , const char* password){
     ID = id;
     StringCopy(Name , name);
     StringCopy(Password , password);

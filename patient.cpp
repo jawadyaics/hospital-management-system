@@ -15,6 +15,9 @@
         StringCopy(Contact, contact);
     }
 
+    Patient::~Patient(){
+        
+    }
     // getter
 
     int Patient::getAge() const {
