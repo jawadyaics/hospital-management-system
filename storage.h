@@ -11,7 +11,7 @@ class Storage {
         count = 0;
     }
 
-    int getSize const(){
+    int getSize() const {
         return count;
     }
 
@@ -20,17 +20,17 @@ class Storage {
     }
 
     bool add(const T& obj){
-        if(cout<100){
+        if(count<100){
             data[count] = obj;
-            cout++;
+            count++;
             return true;
         }
         return false;
     }
 
     T* findByID(int id){
-        for(int i = 0; i<cout; i++){
-            if(data[i]->getID() == id){
+        for(int i = 0; i<count; i++){
+            if(data[i].getID() == id){
                 return &data[i];
             }
         }
@@ -39,9 +39,9 @@ class Storage {
 
 
     bool removeByID(int id){
-        for(int i = 0; i<cout; i++){
-            if(data[i]->getID() == id){
-                for(int j = i; j<cout-1; j++){
+        for(int i = 0; i<count; i++){
+            if(data[i].getID() == id){
+                for(int j = i; j<count-1; j++){
                     data[j] = data[j+1];
                 }
                 count--;
