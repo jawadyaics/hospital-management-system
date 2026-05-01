@@ -12,4 +12,4 @@ class Admin : public Person {
     void showMenu(){};
     void printDetails(){};
 
-}
+};
