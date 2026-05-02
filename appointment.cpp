@@ -70,7 +70,7 @@ void Appointment::setTime(const char* time){
     stringCopy(this->time , time);
 
 }
-void Appointment::getStatus(const char* status){
+void Appointment::setStatus(const char* status){
     stringCopy(this->status , status);
 
 }
