@@ -4,12 +4,12 @@
 class Admin : public Person {
     public:
 
-    Admin(){};
+    Admin();
 
-    Admin(int id , const char* name , const char* password){};
-    ~Admin(){};
+    Admin(int id , const char* name , const char* password);
+    ~Admin();
 
-    void showMenu(){};
-    void printDetails(){};
+    void showMenu();
+    void printDetails();
 
 };

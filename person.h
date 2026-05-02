@@ -4,29 +4,29 @@ class Person {
     protected:
     int ID;
     char Name[50];
-    char Password[5];
+    char Password[50];
 
-    int StringLength(const char* str){};
-    void StringCopy(char* destination , const char* source){};
+    int StringLength(const char* str);
+    void StringCopy(char* destination , const char* source);
 
 
     public:
     Person();
-    Person(int id , const char *name , const char* password){};
+    Person(int id , const char *name , const char* password);
     virtual ~Person();
 
 
     // Getters Declaration
 
-    int getID() const {};
-    const char* getName() const {};
-    const char* getPassword() const {};
+    int getID() const ;
+    const char* getName() const ;
+    const char* getPassword() const ;
 
     // Setters 
 
-    void setID(int id) {};
-    void setName(const char* name) {};
-    void setPassword(const char* password) {};
+    void setID(int id) ;
+    void setName(const char* name) ;
+    void setPassword(const char* password) ;
 
 
     // Virtual Functions

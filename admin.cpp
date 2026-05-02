@@ -4,8 +4,8 @@
 
 Admin::Admin(){
         ID = 0;
-        Name[1] = '\0';
-        Password[1] = '\0';
+        Name[0] = '\0';
+        Password[0] = '\0';
     }
 
     Admin::Admin(int id , const char* name , const char* password): Person(id , name , password){};

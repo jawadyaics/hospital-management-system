@@ -2,8 +2,8 @@
 
 
     Doctor::Doctor(){
-        Specialization[1] = '\0';
-        Contact[1] = '\0';
+        Specialization[0] = '\0';
+        Contact[0] = '\0';
         Fee = 0;
 
     }

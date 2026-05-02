@@ -2,8 +2,8 @@
 
     Patient::Patient(){
         Age = 0;
-        Gender[1] = '\0';
-        Contact[1] = '\0';
+        Gender[0] = '\0';
+        Contact[0] = '\0';
         Balance = 0;
     }
 

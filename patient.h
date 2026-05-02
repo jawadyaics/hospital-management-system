@@ -10,39 +10,39 @@ class Patient : public Person {
     double Balance;
 
     public:
-    Patient(){};
-    Patient(int id ,const char* name ,const char* password ,int age ,const char* gender ,const char* contact, double balance){};
+    Patient();
+    Patient(int id ,const char* name ,const char* password ,int age ,const char* gender ,const char* contact, double balance);
 
     ~Patient();
 
     // getter
 
-    int getAge() const {};
+    int getAge() const;
 
-    const char* getGender() const{};
+    const char* getGender() const;
 
-    const char* getContact() const{};
+    const char* getContact() const;
 
-    double getBalance() const {};
+    double getBalance() const ;
 
 
     // Setters 
 
-    void setAge(int age) {};
+    void setAge(int age) ;
 
-    void setGender(const char* gender){};
+    void setGender(const char* gender);
 
-    void setContact(const char* contact){};
+    void setContact(const char* contact);
 
-    void setBalance(double balance){};
+    void setBalance(double balance);
 
 
-    void addFunds(double amount){};
+    void addFunds(double amount);
 
-    void deductFunds(double abount){};
+    void deductFunds(double abount);
 
     // Virtual Functions
 
-    void showMenu(){};
-    void printDetails(){};
+    void showMenu();
+    void printDetails();
 };

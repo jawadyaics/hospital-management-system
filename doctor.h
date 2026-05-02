@@ -10,31 +10,31 @@ class Doctor : public Person {
 
     public:
 
-    Doctor(){};
-    Doctor(int id , const char* name , const char* password , const char* specialization , const char* contact, double fee){};
-    ~Doctor(){};
+    Doctor();
+    Doctor(int id , const char* name , const char* password , const char* specialization , const char* contact, double fee);
+    ~Doctor();
 
     //Getters
-    const char* getSpecialization() const {};
-    const char* getContact() const {};
-    double getFee() const {};
+    const char* getSpecialization() const ;
+    const char* getContact() const ;
+    double getFee() const;
 
     //Setters
 
-    void setSpecialization(const char* specializatoin){};
-    void setContact(const char* contact){};
-    void setFee(double fee){};
+    void setSpecialization(const char* specializatoin);
+    void setContact(const char* contact);
+    void setFee(double fee);
 
     //Overloading == Operator
 
-    bool operator==(const Doctor& other)const{};
+    bool operator==(const Doctor& other)const;
     
     //Overloading << Operaor
-    friend std::ostream& operator<<(std::ostream& , const Doctor&){};
+    friend std::ostream& operator<<(std::ostream& , const Doctor&);
 
 
     //virtual Function Implementation
 
-    void showMenu(){};
-    void printDetails(){};
+    void showMenu();
+    void printDetails();
 };

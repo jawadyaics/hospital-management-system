@@ -21,8 +21,8 @@ void Person::StringCopy(char* destination , const char* source){
 
 Person::Person(){
     ID = 0;
-    Name[1] = '\0';
-    Password[1] = '\0';
+    Name[0] = '\0';
+    Password[0] = '\0';
 }
 
 Person::Person(int id , const char* name , const char* password){
