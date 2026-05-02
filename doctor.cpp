@@ -54,8 +54,8 @@
     //virtual Function Implementation
 
     void Doctor::showMenu(){
-
+        //Implementation with SFML
     }
-    void Doctor::printDetails() const{
-
+    void Doctor::printDetails(){
+        std::cout << *this;
     }

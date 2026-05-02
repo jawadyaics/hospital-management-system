@@ -36,5 +36,5 @@ class Doctor : public Person {
     //virtual Function Implementation
 
     void showMenu(){};
-    void printDetails() const{};
+    void printDetails(){};
 };
