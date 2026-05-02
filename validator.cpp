@@ -30,7 +30,7 @@ void Validator::validateDate(const char* date){
 
     for(int i = 0; i<10; i++){
         if(i == 2 || i == 5){
-            //if(time[i] != '-') throw InvalidInputException("Date must contain hyphen at position 3 and 6. Formate is DD-MM-YYYY");
+            //if(date[i] != '-') throw InvalidInputException("Date must contain hyphen at position 3 and 6. Formate is DD-MM-YYYY");
         }
 
         else{
