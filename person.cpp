@@ -31,6 +31,10 @@ Person::Person(int id , const char* name , const char* password){
     StringCopy(Password , password);
 }
 
+Person::~Person(){
+    // Later Implementation
+}
+
 // Getters
 
 int Person::getID() const{
