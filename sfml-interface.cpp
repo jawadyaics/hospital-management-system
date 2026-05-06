@@ -100,38 +100,82 @@ void SfmlInterface::processMouseClick(float mouseX, float mouseY) {
         }
     }
 
-if (currentState == ADMIN_MENU) {
-    // Column 1
-    if (mouseX >= 50 && mouseX <= 380 && mouseY >= 120 && mouseY <= 165) {
-        currentChoice == 1;
-    } else if (mouseX >= 50 && mouseX <= 380 && mouseY >= 180 && mouseY <= 225) {
-        currentChoice == 2;
-    } else if (mouseX >= 50 && mouseX <= 380 && mouseY >= 240 && mouseY <= 285) {
-        currentChoice == 3;
-    } else if (mouseX >= 50 && mouseX <= 380 && mouseY >= 300 && mouseY <= 345) {
-        currentChoice == 4;
-    } else if (mouseX >= 50 && mouseX <= 380 && mouseY >= 360 && mouseY <= 405) {
-        currentChoice == 5;
-    } else if (mouseX >= 50 && mouseX <= 380 && mouseY >= 420 && mouseY <= 465) {
-        currentChoice == 6;
+    if (currentState == ADMIN_MENU) {
+        // Column 1
+        if (mouseX >= 50 && mouseX <= 380 && mouseY >= 120 && mouseY <= 165) {
+            currentChoice == 1;
+        } else if (mouseX >= 50 && mouseX <= 380 && mouseY >= 180 && mouseY <= 225) {
+            currentChoice == 2;
+        } else if (mouseX >= 50 && mouseX <= 380 && mouseY >= 240 && mouseY <= 285) {
+            currentChoice == 3;
+        } else if (mouseX >= 50 && mouseX <= 380 && mouseY >= 300 && mouseY <= 345) {
+            currentChoice == 4;
+        } else if (mouseX >= 50 && mouseX <= 380 && mouseY >= 360 && mouseY <= 405) {
+            currentChoice == 5;
+        } else if (mouseX >= 50 && mouseX <= 380 && mouseY >= 420 && mouseY <= 465) {
+            currentChoice == 6;
 
-    // Column 2
-    } else if (mouseX >= 420 && mouseX <= 750 && mouseY >= 120 && mouseY <= 165) {
-        currentChoice == 7;
-    } else if (mouseX >= 420 && mouseX <= 750 && mouseY >= 180 && mouseY <= 225) {
-        currentChoice == 8;
-    } else if (mouseX >= 420 && mouseX <= 750 && mouseY >= 240 && mouseY <= 285) {
-        currentChoice == 9;
-    } else if (mouseX >= 420 && mouseX <= 750 && mouseY >= 300 && mouseY <= 345) {
-        currentChoice == 10;
-    } else if (mouseX >= 420 && mouseX <= 750 && mouseY >= 360 && mouseY <= 405) {
-        currentChoice == 11;
+        // Column 2
+        } else if (mouseX >= 420 && mouseX <= 750 && mouseY >= 120 && mouseY <= 165) {
+            currentChoice == 7;
+        } else if (mouseX >= 420 && mouseX <= 750 && mouseY >= 180 && mouseY <= 225) {
+            currentChoice == 8;
+        } else if (mouseX >= 420 && mouseX <= 750 && mouseY >= 240 && mouseY <= 285) {
+            currentChoice == 9;
+        } else if (mouseX >= 420 && mouseX <= 750 && mouseY >= 300 && mouseY <= 345) {
+            currentChoice == 10;
+        } else if (mouseX >= 420 && mouseX <= 750 && mouseY >= 360 && mouseY <= 405) {
+            currentChoice == 11;
 
-    // Logout — full width bottom button
-    } else if (mouseX >= 50 && mouseX <= 750 && mouseY >= 510 && mouseY <= 555) {
-        currentState = LOGIN_SCREEN;
+        // Logout — full width bottom button
+        } else if (mouseX >= 50 && mouseX <= 750 && mouseY >= 510 && mouseY <= 555) {
+            currentState = LOGIN_SCREEN;
+        }
     }
-}
+
+
+    if (currentState == DOCTOR_MENU) {
+        if (mouseX >= 200 && mouseX <= 600 && mouseY >= 140 && mouseY <= 185) {
+            currentChoice = 1;
+        } else if (mouseX >= 200 && mouseX <= 600 && mouseY >= 205 && mouseY <= 250) {
+            currentChoice = 2;
+        } else if (mouseX >= 200 && mouseX <= 600 && mouseY >= 270 && mouseY <= 315) {
+            currentChoice = 3;
+        } else if (mouseX >= 200 && mouseX <= 600 && mouseY >= 335 && mouseY <= 380) {
+            currentChoice = 4;
+        } else if (mouseX >= 200 && mouseX <= 600 && mouseY >= 400 && mouseY <= 445) {
+            currentChoice = 5;
+        } else if (mouseX >= 200 && mouseX <= 600 && mouseY >= 510 && mouseY <= 555) {
+            currentState = LOGIN_SCREEN;
+        }
+    }
+
+
+    if (currentState == PATIENT_MENU) {
+        // Column 1
+        if (mouseX >= 50 && mouseX <= 380 && mouseY >= 140 && mouseY <= 185) {
+            currentChoice = 1;
+        } else if (mouseX >= 50 && mouseX <= 380 && mouseY >= 205 && mouseY <= 250) {
+            currentChoice = 2;
+        } else if (mouseX >= 50 && mouseX <= 380 && mouseY >= 270 && mouseY <= 315) {
+            currentChoice = 3;
+        } else if (mouseX >= 50 && mouseX <= 380 && mouseY >= 335 && mouseY <= 380) {
+            currentChoice = 4;
+
+        // Column 2
+        } else if (mouseX >= 420 && mouseX <= 750 && mouseY >= 140 && mouseY <= 185) {
+            currentChoice = 5;
+        } else if (mouseX >= 420 && mouseX <= 750 && mouseY >= 205 && mouseY <= 250) {
+            currentChoice = 6;
+        } else if (mouseX >= 420 && mouseX <= 750 && mouseY >= 270 && mouseY <= 315) {
+            currentChoice = 7;
+
+        // Logout — full width bottom
+        } else if (mouseX >= 50 && mouseX <= 750 && mouseY >= 510 && mouseY <= 555) {
+            currentState = LOGIN_SCREEN;
+        }
+    }
+
 }
 
 void SfmlInterface::processKeyBoardInput(sf::Uint32 unicodeCode) {
@@ -252,14 +296,44 @@ void SfmlInterface::renderLoginScreen() {
 }
 
 void SfmlInterface::renderPatientMenu() {
-    drawText("Patient Dashboard", 300, 50, 30, sf::Color::White);
-    drawText("Successfully Logged In!", 300, 150, 20, sf::Color::Green);
-    // You will expand this later with buttons for "Book Appointment", "View Bills", etc.
+    // Title
+    drawText("MediCore Patient Panel", 220, 20, 28, sf::Color::White);
+
+    // TODO: Replace with actual patient name and balance from session
+    drawText("Welcome, [Patient Name]", 270, 60, 20, sf::Color(180, 220, 180));
+    drawText("Balance: PKR [balance]", 290, 90, 18, sf::Color(255, 215, 0));
+
+    // Column 1
+    drawButton("1. Book Appointment",       50, 140, 330, 45, sf::Color(70, 130, 180));
+    drawButton("2. Cancel Appointment",     50, 205, 330, 45, sf::Color(70, 130, 180));
+    drawButton("3. View My Appointments",   50, 270, 330, 45, sf::Color(70, 130, 180));
+    drawButton("4. View My Medical Records",50, 335, 330, 45, sf::Color(70, 130, 180));
+
+    // Column 2
+    drawButton("5. View My Bills",  420, 140, 330, 45, sf::Color(70, 130, 180));
+    drawButton("6. Pay Bill",       420, 205, 330, 45, sf::Color(34, 139, 34));
+    drawButton("7. Top Up Balance", 420, 270, 330, 45, sf::Color(34, 139, 34));
+
+    // Logout — full width bottom
+    drawButton("8. Logout", 50, 510, 700, 45, sf::Color(178, 34, 34));
 }
 
 void SfmlInterface::renderDoctorMenu() {
-    drawText("Doctor Dashboard", 300, 50, 30, sf::Color::White);
-    drawText("Successfully Logged In!", 300, 150, 20, sf::Color::Green);
+    // Title
+    drawText("MediCore Doctor Panel", 220, 20, 28, sf::Color::White);
+
+    // TODO: Replace with actual doctor name and specialization from session
+    drawText("Welcome, Dr. [Name] | Specialization: [spec]", 100, 65, 18, sf::Color(180, 220, 180));
+
+    // Buttons — centered single column
+    drawButton("1. View Today's Appointments",   200, 140, 400, 45, sf::Color(70, 130, 180));
+    drawButton("2. Mark Appointment Complete",   200, 205, 400, 45, sf::Color(70, 130, 180));
+    drawButton("3. Mark Appointment No-Show",    200, 270, 400, 45, sf::Color(70, 130, 180));
+    drawButton("4. Write Prescription",          200, 335, 400, 45, sf::Color(70, 130, 180));
+    drawButton("5. View Patient Medical History",200, 400, 400, 45, sf::Color(70, 130, 180));
+
+    // Logout
+    drawButton("6. Logout", 200, 510, 400, 45, sf::Color(178, 34, 34));
 }
 
 void SfmlInterface::renderAdminMenu() {
