@@ -14,6 +14,7 @@ enum AppState {
     ADMIN_MENU,
     PATIENT_MENU,
     DOCTOR_MENU
+
 };
 
 
@@ -34,6 +35,8 @@ class SfmlInterface {
     int activeInputField;
     int selectedRole;
     int loggedInUserID;
+    int currentChoice;
+    
 
     void drawText(const char* text, float x, float y, int size , sf::Color color);
     void drawButton(const char* text , float x , float y , float width , float height , sf::Color bgColor);

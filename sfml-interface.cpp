@@ -99,6 +99,39 @@ void SfmlInterface::processMouseClick(float mouseX, float mouseY) {
             attemptLogin();
         }
     }
+
+if (currentState == ADMIN_MENU) {
+    // Column 1
+    if (mouseX >= 50 && mouseX <= 380 && mouseY >= 120 && mouseY <= 165) {
+        currentChoice == 1;
+    } else if (mouseX >= 50 && mouseX <= 380 && mouseY >= 180 && mouseY <= 225) {
+        currentChoice == 2;
+    } else if (mouseX >= 50 && mouseX <= 380 && mouseY >= 240 && mouseY <= 285) {
+        currentChoice == 3;
+    } else if (mouseX >= 50 && mouseX <= 380 && mouseY >= 300 && mouseY <= 345) {
+        currentChoice == 4;
+    } else if (mouseX >= 50 && mouseX <= 380 && mouseY >= 360 && mouseY <= 405) {
+        currentChoice == 5;
+    } else if (mouseX >= 50 && mouseX <= 380 && mouseY >= 420 && mouseY <= 465) {
+        currentChoice == 6;
+
+    // Column 2
+    } else if (mouseX >= 420 && mouseX <= 750 && mouseY >= 120 && mouseY <= 165) {
+        currentChoice == 7;
+    } else if (mouseX >= 420 && mouseX <= 750 && mouseY >= 180 && mouseY <= 225) {
+        currentChoice == 8;
+    } else if (mouseX >= 420 && mouseX <= 750 && mouseY >= 240 && mouseY <= 285) {
+        currentChoice == 9;
+    } else if (mouseX >= 420 && mouseX <= 750 && mouseY >= 300 && mouseY <= 345) {
+        currentChoice == 10;
+    } else if (mouseX >= 420 && mouseX <= 750 && mouseY >= 360 && mouseY <= 405) {
+        currentChoice == 11;
+
+    // Logout — full width bottom button
+    } else if (mouseX >= 50 && mouseX <= 750 && mouseY >= 510 && mouseY <= 555) {
+        currentState = LOGIN_SCREEN;
+    }
+}
 }
 
 void SfmlInterface::processKeyBoardInput(sf::Uint32 unicodeCode) {
@@ -230,6 +263,25 @@ void SfmlInterface::renderDoctorMenu() {
 }
 
 void SfmlInterface::renderAdminMenu() {
-    drawText("Admin Dashboard", 300, 50, 30, sf::Color::White);
-    drawText("Successfully Logged In!", 300, 150, 20, sf::Color::Green);
+    // Title
+    drawText("MediCore Admin Panel", 220, 20, 28, sf::Color::White);
+    drawText("Admin Dashboard", 300, 60, 18, sf::Color(180, 180, 180));
+
+    // --- Column 1 (x=50) ---
+    drawButton("1. Add Doctor",50,  120, 330, 45, sf::Color(70, 130, 180));
+    drawButton("2. Remove Doctor",50,  180, 330, 45, sf::Color(70, 130, 180));
+    drawButton("3. Add Patient",50,  240, 330, 45, sf::Color(70, 130, 180));
+    drawButton("4. Remove Patient",50,  300, 330, 45, sf::Color(70, 130, 180));
+    drawButton("5. View All Patients",50,  360, 330, 45, sf::Color(70, 130, 180));
+    drawButton("6. View All Doctors",50,  420, 330, 45, sf::Color(70, 130, 180));
+
+    // --- Column 2 (x=420) ---
+    drawButton("7. View All Appointments", 420, 120, 330, 45, sf::Color(70, 130, 180));
+    drawButton("8. View Unpaid Bills",420, 180, 330, 45, sf::Color(70, 130, 180));
+    drawButton("9. Discharge Patient",420, 240, 330, 45, sf::Color(70, 130, 180));
+    drawButton("10. View Security Log",420, 300, 330, 45, sf::Color(70, 130, 180));
+    drawButton("11. Generate Daily Report",420, 360, 330, 45, sf::Color(34, 139, 34));
+
+    // Logout — full width, red, at bottom
+    drawButton("12. Logout",50,  510, 700, 45, sf::Color(178, 34, 34));
 }
