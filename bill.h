@@ -16,6 +16,7 @@ class Bill {
 
 
         // Getters
+    int getID() const { return billID; }
     int getBillID() const; 
     int getAppointmentID() const;
     int getPatientID() const;

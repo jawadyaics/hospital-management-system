@@ -31,8 +31,8 @@ class FileHandler {
 
 
     //Updaters
-    void updateAppointment(const Patient& updatePatient);
-    void updateAppointment(const Doctor& updateDoctor);
+    void updatePatient(const Patient& updatePatient);
+    void updateDoctor(const Doctor& updateDoctor);
     void updateAdmin(const Admin& updateAdmin);
     void updateAppointment(const Appointment& updateAppointment);
     void updatePrescription(const Prescription& updatePrescription);
@@ -46,5 +46,10 @@ class FileHandler {
     void deleteAppointment(int appointmentID);
     void deletePrescription(int prescriptionID);
     void deleteBill(int BillID);
+    void deletePatientRecords(int patientID);
+    void archivePatientRecords(int patientID);
+
+    // Security Logging
+    void logSecurityEvent(const char* role, int id, const char* result);
 };
 

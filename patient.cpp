@@ -64,6 +64,20 @@
         Balance -= amount;
     }
 
+    Patient& Patient::operator+=(double amount) {
+        addFunds(amount);
+        return *this;
+    }
+
+    Patient& Patient::operator-=(double amount) {
+        deductFunds(amount);
+        return *this;
+    }
+
+    bool Patient::operator==(const Patient& other) const {
+        return getID() == other.getID();
+    }
+
     void Patient::showMenu(){
 
     }

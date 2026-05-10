@@ -12,6 +12,7 @@ class Validator {
 
     static void validateID(int id);
     static void validateDate(const char* date);
+    static bool validateDate(const char* date, bool returnBool);
     static void validateTimeSlot(const char* time);
     static void validateContact(const char* contact);
     static void validatePassword(const char* password);

@@ -1,4 +1,7 @@
 #pragma once
+
+class Appointment;
+
 // Implementing the class here in header file to avoid the linker error
 template <typename T>
 class Storage {
@@ -30,12 +33,25 @@ class Storage {
 
     T* findByID(int id){
         for(int i = 0; i<count; i++){
-            if(data[i].getID() == id){
-                return &data[i];
-            }
+            if(data[i].getID() == id) return &data[i];
         }
         return nullptr;
     }
+
+    T* getAt(int index) {
+        if (index >= 0 && index < count) return &data[index];
+        return nullptr;
+    }
+
+    int getNextID() {
+        int maxID = 0;
+        for (int i = 0; i < count; i++) {
+            if (data[i].getID() > maxID) maxID = data[i].getID();
+        }
+        return maxID + 1;
+    }
+
+
 
 
     bool removeByID(int id){
@@ -50,6 +66,7 @@ class Storage {
         }
         return false;
     }
+    void clear() { count = 0; }
 
 
 };

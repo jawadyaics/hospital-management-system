@@ -39,7 +39,11 @@ class Patient : public Person {
 
     void addFunds(double amount);
 
-    void deductFunds(double abount);
+    void deductFunds(double amount);
+
+    Patient& operator+=(double amount);
+    Patient& operator-=(double amount);
+    bool operator==(const Patient& other) const;
 
     // Virtual Functions
 

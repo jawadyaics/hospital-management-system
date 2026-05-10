@@ -27,6 +27,9 @@ class SfmlInterface {
     Storage<Admin>& adminDB;
     Storage<Patient>& patientDB;
     Storage<Doctor>& doctorDB;
+    Storage<Appointment> appointmentDB;
+    Storage<Bill> billDB;
+    Storage<Prescription> prescriptionDB;
     FileHandler& fileHandler;
 
     char inputIdBuffer[50];
@@ -37,6 +40,10 @@ class SfmlInterface {
     int loggedInUserID;
     int currentChoice;
     
+    // Form and Sub-state handling
+    int subState;
+    char formBuffers[6][50];
+    int activeFormField;
 
     void drawText(const char* text, float x, float y, int size , sf::Color color);
     void drawButton(const char* text , float x , float y , float width , float height , sf::Color bgColor);
@@ -47,6 +54,9 @@ class SfmlInterface {
     void renderAdminMenu();
     void renderPatientMenu();
     void renderDoctorMenu();
+    
+    void sortAppointmentsByDate(Appointment** arr, int n);
+    void sortPrescriptionsByDate(Prescription** arr, int n);
 
     void handleEvents();
     void processMouseClick(float mouseX , float mouseY);

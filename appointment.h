@@ -23,6 +23,7 @@ class Appointment {
 
 
     // Getters
+    int getID() const { return appointmentID; }
     int getAppointmentID() const;
     int getPatientID() const;
     int getDoctorID() const;

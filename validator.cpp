@@ -1,5 +1,6 @@
 #include "validator.h"
 #include "invalid-input-exception.h"
+#include <ctime>
 
 
 int Validator::stringLength(const char* str){
@@ -66,6 +67,31 @@ void Validator::validateDate(const char* date){
     }
 
 }
+
+bool Validator::validateDate(const char* date, bool returnBool) {
+    try {
+        validateDate(date);
+        
+        int d = (date[0]-'0')*10 + (date[1]-'0');
+        int m = (date[3]-'0')*10 + (date[4]-'0');
+        int y = (date[6]-'0')*1000 + (date[7]-'0')*100 + (date[8]-'0')*10 + (date[9]-'0');
+
+        time_t t = time(0);
+        struct tm* now = localtime(&t);
+        int curY = now->tm_year + 1900;
+        int curM = now->tm_mon + 1;
+        int curD = now->tm_mday;
+
+        if (y < curY) return false;
+        if (y == curY) {
+            if (m < curM) return false;
+            if (m == curM && d < curD) return false;
+        }
+        return true;
+    } catch (...) {
+        return false;
+    }
+}
 void Validator::validateTimeSlot(const char* time){
     if(stringLength(time) != 5){
         throw InvalidInputException("Time musst contain 5 Characters. Formate is HH:MM");
@@ -102,18 +128,12 @@ void Validator::validateTimeSlot(const char* time){
 void Validator::validateContact(const char* contact){
     int len = stringLength(contact);
 
-    if(len != 12){
-        throw InvalidInputException("Length of a Contact Number must be 12 in the formate 03XX-XXXXXXX");
+    if(len != 11){
+        throw InvalidInputException("Contact must be exactly 11 digits all numeric.");
     }
 
-    for(int i = 0; i<12; i++){
-        if(i == 4){
-            if(contact[i] != '-') throw InvalidInputException("Contact must contain a hyphen '-' att position 5");
-        }
-
-        else {
-            if(!isDigit(contact[i])) throw InvalidInputException("Contact number must contain only digits and a hyphen");
-        }
+    for(int i = 0; i<11; i++){
+        if(!isDigit(contact[i])) throw InvalidInputException("Contact must contain only digits.");
     }
 }
 

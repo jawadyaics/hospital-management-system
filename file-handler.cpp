@@ -1,5 +1,19 @@
 #include "file-handler.h"
 #include <fstream>
+#include <ctime>
+
+void FileHandler::logSecurityEvent(const char* role, int id, const char* result) {
+    std::ofstream file("security_log.txt", std::ios::app);
+    if (file.is_open()) {
+        time_t now = time(0);
+        char* dt = ctime(&now);
+        int i = 0;
+        while(dt[i] != '\n' && dt[i] != '\0') i++;
+        dt[i] = '\0';
+        file << "[" << dt << "] Role: " << role << ", ID: " << id << ", Result: " << result << "\n";
+        file.close();
+    }
+}
 
 // Loaders Implementation
 
@@ -230,7 +244,7 @@ void FileHandler::appendBill(const Bill& bil){
 
 
     //Updaters
-void FileHandler::updateAppointment(const Patient& updatePatient){
+void FileHandler::updatePatient(const Patient& updatePatient){
     std::ifstream fileIn("patients.txt");
     std::ofstream fileOut("temp.txt");
 
@@ -274,7 +288,7 @@ void FileHandler::updateAppointment(const Patient& updatePatient){
 
 
 
-void FileHandler::updateAppointment(const Doctor& updateDoctor){
+void FileHandler::updateDoctor(const Doctor& updateDoctor){
     std::ifstream fileIn("doctors.txt");
     std::ofstream fileOut("temp.txt");
 
@@ -689,4 +703,111 @@ void FileHandler::deleteBill(int BillID){
 
     remove("bills.txt");
     rename("temp.txt", "bills.txt");
+}
+
+
+void FileHandler::deletePatientRecords(int patientID) {
+    // Delete from appointments.txt
+    {
+        Storage<Appointment> temp;
+        loadAppointments(temp);
+        std::ofstream out("appointments.txt", std::ios::trunc);
+        for(int i=0; i<temp.getSize(); i++) {
+            if (temp.getAt(i)->getPatientID() != patientID) {
+                out << temp.getAt(i)->getAppointmentID() << " " << temp.getAt(i)->getPatientID() << " " 
+                    << temp.getAt(i)->getDoctorID() << " " << temp.getAt(i)->getDate() << " " 
+                    << temp.getAt(i)->getTime() << " " << temp.getAt(i)->getStatus() << "\n";
+            }
+        }
+        out.close();
+    }
+    // Delete from bills.txt
+    {
+        Storage<Bill> temp;
+        loadBills(temp);
+        std::ofstream out("bills.txt", std::ios::trunc);
+        for(int i=0; i<temp.getSize(); i++) {
+            if (temp.getAt(i)->getPatientID() != patientID) {
+                out << temp.getAt(i)->getBillID() << " " << temp.getAt(i)->getAppointmentID() << " " 
+                    << temp.getAt(i)->getPatientID() << " " << temp.getAt(i)->getAmount() << " " 
+                    << temp.getAt(i)->getStatus() << "\n";
+            }
+        }
+        out.close();
+    }
+    // Delete from prescriptions.txt
+    {
+        Storage<Prescription> temp;
+        loadPrescriptions(temp);
+        std::ofstream out("prescriptions.txt", std::ios::trunc);
+        for(int i=0; i<temp.getSize(); i++) {
+            // Prescriptions don't have patientID directly, need to check via appointment
+            Storage<Appointment> appts;
+            loadAppointments(appts);
+            Appointment* a = appts.findByID(temp.getAt(i)->getAppointmentId());
+            if (a && a->getPatientID() != patientID) {
+                out << temp.getAt(i)->getPrescriptionId() << " " << temp.getAt(i)->getAppointmentId() << " " 
+                    << temp.getAt(i)->getMedicines() << " " << temp.getAt(i)->getNotes() << "\n";
+            }
+        }
+        out.close();
+    }
+}
+
+void FileHandler::archivePatientRecords(int patientID) {
+    std::ofstream out("discharged.txt", std::ios::app);
+    if (!out.is_open()) return;
+
+    // Archive Patient Info
+    {
+        Storage<Patient> temp;
+        loadPatients(temp);
+        Patient* p = temp.findByID(patientID);
+        if (p) {
+            out << "PATIENT," << p->getID() << "," << p->getName() << "," << p->getAge() << "," 
+                << p->getGender() << "," << p->getContact() << "," << p->getBalance() << "\n";
+        }
+    }
+
+    // Archive Appointments
+    {
+        Storage<Appointment> temp;
+        loadAppointments(temp);
+        for(int i=0; i<temp.getSize(); i++) {
+            if (temp.getAt(i)->getPatientID() == patientID) {
+                out << "APPOINTMENT," << temp.getAt(i)->getAppointmentID() << "," << temp.getAt(i)->getPatientID() << "," 
+                    << temp.getAt(i)->getDoctorID() << "," << temp.getAt(i)->getDate() << "," 
+                    << temp.getAt(i)->getTime() << "," << temp.getAt(i)->getStatus() << "\n";
+            }
+        }
+    }
+
+    // Archive Bills
+    {
+        Storage<Bill> temp;
+        loadBills(temp);
+        for(int i=0; i<temp.getSize(); i++) {
+            if (temp.getAt(i)->getPatientID() == patientID) {
+                out << "BILL," << temp.getAt(i)->getBillID() << "," << temp.getAt(i)->getAppointmentID() << "," 
+                    << temp.getAt(i)->getPatientID() << "," << temp.getAt(i)->getAmount() << "," 
+                    << temp.getAt(i)->getStatus() << "\n";
+            }
+        }
+    }
+
+    // Archive Prescriptions
+    {
+        Storage<Prescription> temp;
+        loadPrescriptions(temp);
+        Storage<Appointment> appts;
+        loadAppointments(appts);
+        for(int i=0; i<temp.getSize(); i++) {
+            Appointment* a = appts.findByID(temp.getAt(i)->getAppointmentId());
+            if (a && a->getPatientID() == patientID) {
+                out << "PRESCRIPTION," << temp.getAt(i)->getPrescriptionId() << "," << temp.getAt(i)->getAppointmentId() << "," 
+                    << temp.getAt(i)->getMedicines() << "," << temp.getAt(i)->getNotes() << "\n";
+            }
+        }
+    }
+    out.close();
 }

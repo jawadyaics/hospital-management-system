@@ -16,6 +16,7 @@ class Prescription {
 
 
     //Getters
+    int getID() const { return prescriptionID; }
     int getPrescriptionId() const;
     int getAppointmentId() const;
     const char* getMedicines() const;
