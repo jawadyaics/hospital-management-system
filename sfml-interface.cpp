@@ -51,8 +51,12 @@ void stringAppend(char* destination, const char* source) {
 SfmlInterface::SfmlInterface(Storage<Patient>& pDB, Storage<Doctor>& dDB, Storage<Admin>& aDB, FileHandler& fh)
     : patientDB(pDB), doctorDB(dDB), adminDB(aDB), fileHandler(fh) 
 {
-    window.create(sf::VideoMode(800, 600), "MediCore Hospital Management System");
+    window.create(sf::VideoMode(800, 600), "MediCore Hospital Management System", sf::Style::Default);
     window.setFramerateLimit(60);
+    
+    // Set up a fixed view to handle resizing correctly
+    sf::View view(sf::FloatRect(0, 0, 800, 600));
+    window.setView(view);
 
     if (!font.loadFromFile("font.ttf")) {
         std::cout << "ERROR: Could not load font.ttf!\n";
@@ -141,8 +145,17 @@ void SfmlInterface::handleEvents() {
     sf::Event event;
     while (window.pollEvent(event)) {
         if (event.type == sf::Event::Closed) window.close();
+        if (event.type == sf::Event::Resized) {
+            // Update the view to the new size of the window
+            sf::FloatRect visibleArea(0, 0, event.size.width, event.size.height);
+            // But we want to keep our 800x600 coordinate system
+            // So we don't update the view's size, we just let SFML scale it
+            // or we can adjust the viewport to maintain aspect ratio
+        }
         if (event.type == sf::Event::MouseButtonPressed) {
-            processMouseClick(event.mouseButton.x, event.mouseButton.y);
+            sf::Vector2i mousePos = sf::Mouse::getPosition(window);
+            sf::Vector2f mappedPos = window.mapPixelToCoords(mousePos);
+            processMouseClick(mappedPos.x, mappedPos.y);
         }
         if (event.type == sf::Event::TextEntered) {
             processKeyBoardInput(event.text.unicode);
