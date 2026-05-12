@@ -77,10 +77,27 @@ bool Validator::validateDate(const char* date, bool returnBool) {
         int y = (date[6]-'0')*1000 + (date[7]-'0')*100 + (date[8]-'0')*10 + (date[9]-'0');
 
         time_t t = time(0);
-        struct tm* now = localtime(&t);
-        int curY = now->tm_year + 1900;
-        int curM = now->tm_mon + 1;
-        int curD = now->tm_mday;
+        char* dt = ctime(&t);
+        // ctime format: "Wed Jun 30 21:49:08 1993\n"
+        // Month at 4, Day at 8, Year at 20
+        
+        int curY = (dt[20]-'0')*1000 + (dt[21]-'0')*100 + (dt[22]-'0')*10 + (dt[23]-'0');
+        int curD = (dt[8] == ' ' ? 0 : (dt[8]-'0')*10) + (dt[9]-'0');
+        
+        int curM = 1;
+        char mon[4]; mon[0] = dt[4]; mon[1] = dt[5]; mon[2] = dt[6]; mon[3] = '\0';
+        if (mon[0] == 'J' && mon[1] == 'a' && mon[2] == 'n') curM = 1;
+        else if (mon[0] == 'F' && mon[1] == 'e' && mon[2] == 'b') curM = 2;
+        else if (mon[0] == 'M' && mon[1] == 'a' && mon[2] == 'r') curM = 3;
+        else if (mon[0] == 'A' && mon[1] == 'p' && mon[2] == 'r') curM = 4;
+        else if (mon[0] == 'M' && mon[1] == 'a' && mon[2] == 'y') curM = 5;
+        else if (mon[0] == 'J' && mon[1] == 'u' && mon[2] == 'n') curM = 6;
+        else if (mon[0] == 'J' && mon[1] == 'u' && mon[2] == 'l') curM = 7;
+        else if (mon[0] == 'A' && mon[1] == 'u' && mon[2] == 'g') curM = 8;
+        else if (mon[0] == 'S' && mon[1] == 'e' && mon[2] == 'p') curM = 9;
+        else if (mon[0] == 'O' && mon[1] == 'c' && mon[2] == 't') curM = 10;
+        else if (mon[0] == 'N' && mon[1] == 'o' && mon[2] == 'v') curM = 11;
+        else if (mon[0] == 'D' && mon[1] == 'e' && mon[2] == 'c') curM = 12;
 
         if (y < curY) return false;
         if (y == curY) {

@@ -341,8 +341,25 @@ void SfmlInterface::processMouseClick(float mouseX, float mouseY) {
             if (currentChoice == 2 || currentChoice == 3) { // Mark Complete/No-Show
                 if (mouseX >= 300 && mouseX <= 500 && mouseY >= 420 && mouseY <= 460) { activeFormField = 1; return; }
                 if (mouseX >= 300 && mouseX <= 500 && mouseY >= 470 && mouseY <= 515) {
-                    time_t t = time(0); struct tm* now = localtime(&t);
-                    char today[20]; strftime(today, 20, "%d-%m-%Y", now);
+                    time_t t = time(0); char* dt = ctime(&t);
+                    char today[20];
+                    int curY = (dt[20]-'0')*1000 + (dt[21]-'0')*100 + (dt[22]-'0')*10 + (dt[23]-'0');
+                    int curD = (dt[8] == ' ' ? 0 : (dt[8]-'0')*10) + (dt[9]-'0');
+                    int curM = 1;
+                    char mon[4]; mon[0] = dt[4]; mon[1] = dt[5]; mon[2] = dt[6]; mon[3] = '\0';
+                    if (mon[0] == 'J' && mon[1] == 'a' && mon[2] == 'n') curM = 1;
+                    else if (mon[0] == 'F' && mon[1] == 'e' && mon[2] == 'b') curM = 2;
+                    else if (mon[0] == 'M' && mon[1] == 'a' && mon[2] == 'r') curM = 3;
+                    else if (mon[0] == 'A' && mon[1] == 'p' && mon[2] == 'r') curM = 4;
+                    else if (mon[0] == 'M' && mon[1] == 'a' && mon[2] == 'y') curM = 5;
+                    else if (mon[0] == 'J' && mon[1] == 'u' && mon[2] == 'n') curM = 6;
+                    else if (mon[0] == 'J' && mon[1] == 'u' && mon[2] == 'l') curM = 7;
+                    else if (mon[0] == 'A' && mon[1] == 'u' && mon[2] == 'g') curM = 8;
+                    else if (mon[0] == 'S' && mon[1] == 'e' && mon[2] == 'p') curM = 9;
+                    else if (mon[0] == 'O' && mon[1] == 'c' && mon[2] == 't') curM = 10;
+                    else if (mon[0] == 'N' && mon[1] == 'o' && mon[2] == 'v') curM = 11;
+                    else if (mon[0] == 'D' && mon[1] == 'e' && mon[2] == 'c') curM = 12;
+                    sprintf(today, "%02d-%02d-%04d", curD, curM, curY);
 
                     int aid = atoi(formBuffers[0]);
                     Appointment* a = appointmentDB.findByID(aid);
@@ -684,8 +701,25 @@ void SfmlInterface::renderAdminMenu() {
         } else if (currentChoice == 11) { // Daily Report
             drawText("Daily Report", 320, 70, 24, sf::Color::Cyan);
             
-            time_t t = time(0); struct tm* now = localtime(&t);
-            char today[20]; strftime(today, 20, "%d-%m-%Y", now);
+            time_t t = time(0); char* dt = ctime(&t);
+            char today[20];
+            int curY = (dt[20]-'0')*1000 + (dt[21]-'0')*100 + (dt[22]-'0')*10 + (dt[23]-'0');
+            int curD = (dt[8] == ' ' ? 0 : (dt[8]-'0')*10) + (dt[9]-'0');
+            int curM = 1;
+            char mon[4]; mon[0] = dt[4]; mon[1] = dt[5]; mon[2] = dt[6]; mon[3] = '\0';
+            if (mon[0] == 'J' && mon[1] == 'a' && mon[2] == 'n') curM = 1;
+            else if (mon[0] == 'F' && mon[1] == 'e' && mon[2] == 'b') curM = 2;
+            else if (mon[0] == 'M' && mon[1] == 'a' && mon[2] == 'r') curM = 3;
+            else if (mon[0] == 'A' && mon[1] == 'p' && mon[2] == 'r') curM = 4;
+            else if (mon[0] == 'M' && mon[1] == 'a' && mon[2] == 'y') curM = 5;
+            else if (mon[0] == 'J' && mon[1] == 'u' && mon[2] == 'n') curM = 6;
+            else if (mon[0] == 'J' && mon[1] == 'u' && mon[2] == 'l') curM = 7;
+            else if (mon[0] == 'A' && mon[1] == 'u' && mon[2] == 'g') curM = 8;
+            else if (mon[0] == 'S' && mon[1] == 'e' && mon[2] == 'p') curM = 9;
+            else if (mon[0] == 'O' && mon[1] == 'c' && mon[2] == 't') curM = 10;
+            else if (mon[0] == 'N' && mon[1] == 'o' && mon[2] == 'v') curM = 11;
+            else if (mon[0] == 'D' && mon[1] == 'e' && mon[2] == 'c') curM = 12;
+            sprintf(today, "%02d-%02d-%04d", curD, curM, curY);
 
             int totalToday = 0, completed = 0, pending = 0, noshow = 0, cancelled = 0;
             double revenue = 0;
@@ -964,8 +998,25 @@ void SfmlInterface::renderDoctorMenu() {
         
         if (currentChoice == 1) { // View Today's Appointments
             drawText("Today's Appointments", 300, 70, 24, sf::Color::Cyan);
-            time_t now = time(0); tm* ltm = localtime(&now);
-            char today[20]; strftime(today, sizeof(today), "%d-%m-%Y", ltm);
+            time_t t = time(0); char* dt = ctime(&t);
+            char today[20];
+            int curY = (dt[20]-'0')*1000 + (dt[21]-'0')*100 + (dt[22]-'0')*10 + (dt[23]-'0');
+            int curD = (dt[8] == ' ' ? 0 : (dt[8]-'0')*10) + (dt[9]-'0');
+            int curM = 1;
+            char mon[4]; mon[0] = dt[4]; mon[1] = dt[5]; mon[2] = dt[6]; mon[3] = '\0';
+            if (mon[0] == 'J' && mon[1] == 'a' && mon[2] == 'n') curM = 1;
+            else if (mon[0] == 'F' && mon[1] == 'e' && mon[2] == 'b') curM = 2;
+            else if (mon[0] == 'M' && mon[1] == 'a' && mon[2] == 'r') curM = 3;
+            else if (mon[0] == 'A' && mon[1] == 'p' && mon[2] == 'r') curM = 4;
+            else if (mon[0] == 'M' && mon[1] == 'a' && mon[2] == 'y') curM = 5;
+            else if (mon[0] == 'J' && mon[1] == 'u' && mon[2] == 'n') curM = 6;
+            else if (mon[0] == 'J' && mon[1] == 'u' && mon[2] == 'l') curM = 7;
+            else if (mon[0] == 'A' && mon[1] == 'u' && mon[2] == 'g') curM = 8;
+            else if (mon[0] == 'S' && mon[1] == 'e' && mon[2] == 'p') curM = 9;
+            else if (mon[0] == 'O' && mon[1] == 'c' && mon[2] == 't') curM = 10;
+            else if (mon[0] == 'N' && mon[1] == 'o' && mon[2] == 'v') curM = 11;
+            else if (mon[0] == 'D' && mon[1] == 'e' && mon[2] == 'c') curM = 12;
+            sprintf(today, "%02d-%02d-%04d", curD, curM, curY);
             
             drawText("ID | Patient Name | Time | Status", 60, 110, 16, sf::Color::Yellow);
             float y = 140; bool found = false;
@@ -1005,8 +1056,25 @@ void SfmlInterface::renderDoctorMenu() {
             drawText(title, 320, 70, 24, sf::Color::Cyan);
             drawText("Today's Pending Appointments:", 60, 110, 18, sf::Color::Yellow);
             
-            time_t t = time(0); struct tm* now = localtime(&t);
-            char today[20]; strftime(today, 20, "%d-%m-%Y", now);
+            time_t t = time(0); char* dt = ctime(&t);
+            char today[20];
+            int curY = (dt[20]-'0')*1000 + (dt[21]-'0')*100 + (dt[22]-'0')*10 + (dt[23]-'0');
+            int curD = (dt[8] == ' ' ? 0 : (dt[8]-'0')*10) + (dt[9]-'0');
+            int curM = 1;
+            char mon[4]; mon[0] = dt[4]; mon[1] = dt[5]; mon[2] = dt[6]; mon[3] = '\0';
+            if (mon[0] == 'J' && mon[1] == 'a' && mon[2] == 'n') curM = 1;
+            else if (mon[0] == 'F' && mon[1] == 'e' && mon[2] == 'b') curM = 2;
+            else if (mon[0] == 'M' && mon[1] == 'a' && mon[2] == 'r') curM = 3;
+            else if (mon[0] == 'A' && mon[1] == 'p' && mon[2] == 'r') curM = 4;
+            else if (mon[0] == 'M' && mon[1] == 'a' && mon[2] == 'y') curM = 5;
+            else if (mon[0] == 'J' && mon[1] == 'u' && mon[2] == 'n') curM = 6;
+            else if (mon[0] == 'J' && mon[1] == 'u' && mon[2] == 'l') curM = 7;
+            else if (mon[0] == 'A' && mon[1] == 'u' && mon[2] == 'g') curM = 8;
+            else if (mon[0] == 'S' && mon[1] == 'e' && mon[2] == 'p') curM = 9;
+            else if (mon[0] == 'O' && mon[1] == 'c' && mon[2] == 't') curM = 10;
+            else if (mon[0] == 'N' && mon[1] == 'o' && mon[2] == 'v') curM = 11;
+            else if (mon[0] == 'D' && mon[1] == 'e' && mon[2] == 'c') curM = 12;
+            sprintf(today, "%02d-%02d-%04d", curD, curM, curY);
 
             float y = 140; int count = 0;
             for(int i=0; i<appointmentDB.getSize(); i++) {
