@@ -85,7 +85,12 @@ bool Validator::validateDate(const char* date, bool returnBool) {
         int curD = (dt[8] == ' ' ? 0 : (dt[8]-'0')*10) + (dt[9]-'0');
         
         int curM = 1;
-        char mon[4]; mon[0] = dt[4]; mon[1] = dt[5]; mon[2] = dt[6]; mon[3] = '\0';
+        char mon[4];
+        mon[0] = dt[4];
+        mon[1] = dt[5];
+        mon[2] = dt[6];
+        mon[3] = '\0';
+        
         if (mon[0] == 'J' && mon[1] == 'a' && mon[2] == 'n') curM = 1;
         else if (mon[0] == 'F' && mon[1] == 'e' && mon[2] == 'b') curM = 2;
         else if (mon[0] == 'M' && mon[1] == 'a' && mon[2] == 'r') curM = 3;
